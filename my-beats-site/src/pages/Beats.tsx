@@ -44,10 +44,10 @@ export default function BeatsPage() {
             <h2>{beat.title}</h2>
             <p className="beat-description">{beat.description}</p>
             <div className="price-options">
-              <button className="price-btn">MP3 – {beat.mp3_price}</button>
-              <button className="price-btn">Drums Only – {beat.drums_price}</button>
+              <button className="price-btn">MP3 – {beat.mp3_price}$</button>
+              <button className="price-btn">Drums Only – {beat.drums_price}$</button>
               <button className="price-btn exclusive">
-                Exclusive Rights – {beat.exclusive_price}
+                Exclusive Rights – {beat.exclusive_price}$
               </button>
             </div>
           </div>
