@@ -6,11 +6,14 @@ type Beat = {
   id: number;
   title: string;
   description: string;
-  img: string;
+  img?: string;
   mp3_price: string;
   drums_price: string;
   exclusive_price: string;
+  preview_url?: string;
 };
+
+const placeholderImg = "https://via.placeholder.com/400x200?text=No+Image";
 
 export default function BeatsPage() {
   const [beats, setBeats] = useState<Beat[]>([]);
@@ -30,7 +33,12 @@ export default function BeatsPage() {
     fetchBeats();
   }, []);
 
-  if (loading) return <p style={{ textAlign: "center", color: "#ccc" }}>Loading beats...</p>;
+  if (loading)
+    return (
+      <p style={{ textAlign: "center", color: "#ccc", marginTop: "2rem" }}>
+        Loading beats...
+      </p>
+    );
 
   return (
     <div className="beats-container">
@@ -40,7 +48,14 @@ export default function BeatsPage() {
       <div className="beats-grid">
         {beats.map((beat) => (
           <div key={beat.id} className="beat-card">
-            <img src={beat.img} alt={beat.title} className="beat-img" />
+            <img
+              src={beat.img || placeholderImg}
+              alt={beat.title}
+              className="beat-img"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = placeholderImg;
+              }}
+            />
             <h2>{beat.title}</h2>
             <p className="beat-description">{beat.description}</p>
             <div className="price-options">
