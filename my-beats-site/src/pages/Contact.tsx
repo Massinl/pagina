@@ -1,3 +1,3 @@
 export default function Contact() {
-  return <h1>Contact Page</h1>
+  return <h2 style={{ textAlign: "center" }}>Contact Page (coming soon)</h2>;
 }

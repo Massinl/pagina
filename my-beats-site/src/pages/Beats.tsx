@@ -1,3 +1,3 @@
 export default function Beats() {
-  return <h1>Beats Page</h1>
+  return <h2 style={{ textAlign: "center" }}>Beats Page (coming soon)</h2>;
 }

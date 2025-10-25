@@ -1,20 +1,22 @@
-import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Beats from './pages/Beats'
-import Contact from './pages/Contact'
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Beats from "./pages/Beats";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/beats" element={<Beats />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-    </div>
-  )
+      <Footer />
+    </>
+  );
 }
 
-export default App
+export default App;
