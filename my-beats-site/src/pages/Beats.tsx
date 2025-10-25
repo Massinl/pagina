@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import "./BeatsPage.css";
+import "./css/BeatsPage.css";
 
 type Beat = {
   id: number;
