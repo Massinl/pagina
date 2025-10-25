@@ -18,10 +18,28 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "1rem 2rem",
-    background: "#111",
+    padding: "1rem 3rem",
+    backgroundColor: "#121212",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
+    position: "sticky",
+    top: 0,
+    zIndex: 100,
   },
-  logo: { color: "#fff", margin: 0 },
-  links: { display: "flex", gap: "1.5rem" },
-  link: { color: "#fff", textDecoration: "none" },
+  logo: {
+    color: "#fbfbfbff",
+    margin: 0,
+    fontWeight: "700",
+    fontSize: "1.5rem",
+  },
+  links: {
+    display: "flex",
+    gap: "2rem",
+  },
+  link: {
+  color: "rgba(255, 255, 255, 1)",
+  textDecoration: "none",
+  fontWeight: "500",
+  transition: "color 0.3s, text-shadow 0.3s",
+},
+
 };
