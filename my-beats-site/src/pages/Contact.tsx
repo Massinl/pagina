@@ -43,7 +43,7 @@ export default function Contact() {
       <section style={styles.socialsSection}>
         <h2 style={styles.socialTitle}>Or find me on Instagram</h2>
         <a
-          href="https://www.instagram.com/nose" // replace with your Instagram
+          href="https://www.instagram.com/_jfontan" // replace with your Instagram
           target="_blank"
           rel="noopener noreferrer"
           style={styles.instagramButton}

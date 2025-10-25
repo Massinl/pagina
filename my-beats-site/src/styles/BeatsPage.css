@@ -1,0 +1,79 @@
+.beats-container {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(180deg, #0e0e0e, #1c1c1c);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.beats-title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: #e2e2e2;
+}
+
+.beats-subtitle {
+  color: #9a9a9a;
+  margin-bottom: 2rem;
+}
+
+.beats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.beat-card {
+  background: #181818;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.beat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6);
+}
+
+.beat-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.beat-description {
+  color: #bdbdbd;
+  font-size: 0.95rem;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.price-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0 1rem 1.5rem;
+}
+
+.price-btn {
+  border: none;
+  background: #272727;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.price-btn:hover {
+  background: #3a3a3a;
+  transform: scale(1.03);
+}
+
+.price-btn.exclusive {
+  background: #8a2be2;
+}
+
+.price-btn.exclusive:hover {
+  background: #9d3dfc;
+}
