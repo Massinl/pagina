@@ -33,6 +33,16 @@ export default function BeatsPage() {
     fetchBeats();
   }, []);
 
+  const handlePlayPreview = (beat: Beat) => {
+    console.log("Playing preview for:", beat.title);
+    if (beat.preview_url) {
+      console.log("Preview URL:", beat.preview_url);
+      // later: add actual audio playback here
+    } else {
+      console.log("No preview available for this beat.");
+    }
+  };
+
   if (loading)
     return (
       <p style={{ textAlign: "center", color: "#ccc", marginTop: "2rem" }}>
@@ -48,14 +58,23 @@ export default function BeatsPage() {
       <div className="beats-grid">
         {beats.map((beat) => (
           <div key={beat.id} className="beat-card">
-            <img
-              src={beat.img || placeholderImg}
-              alt={beat.title}
-              className="beat-img"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = placeholderImg;
-              }}
-            />
+            <div className="beat-img-wrapper">
+              <img
+                src={beat.img || placeholderImg}
+                alt={beat.title}
+                className="beat-img"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = placeholderImg;
+                }}
+              />
+              <button
+                className="play-button"
+                onClick={() => handlePlayPreview(beat)}
+              >
+                ▶
+              </button>
+            </div>
+
             <h2>{beat.title}</h2>
             <p className="beat-description">{beat.description}</p>
             <div className="price-options">
