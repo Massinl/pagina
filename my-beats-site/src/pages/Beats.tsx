@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
 import "./css/BeatsPage.css";
+import { FaPlay, FaPause } from "react-icons/fa";
+
 
 type Beat = {
   id: number;
@@ -18,6 +20,8 @@ const placeholderImg = "https://via.placeholder.com/400x200?text=No+Image";
 export default function BeatsPage() {
   const [beats, setBeats] = useState<Beat[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentBeatId, setCurrentBeatId] = useState<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const fetchBeats = async () => {
@@ -34,13 +38,42 @@ export default function BeatsPage() {
   }, []);
 
   const handlePlayPreview = (beat: Beat) => {
-    console.log("Playing preview for:", beat.title);
-    if (beat.preview_url) {
-      console.log("Preview URL:", beat.preview_url);
-      // later: add actual audio playback here
-    } else {
+    console.log("Clicked play for:", beat.title);
+
+    if (!beat.preview_url) {
       console.log("No preview available for this beat.");
+      return;
     }
+
+    // If an audio is already playing, pause it
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    // If same beat is clicked again, stop playback
+    if (currentBeatId === beat.id) {
+      setCurrentBeatId(null);
+      return;
+    }
+
+    // Create new audio and play
+    const audio = new Audio(beat.preview_url);
+    audioRef.current = audio;
+
+    audio
+      .play()
+      .then(() => {
+        console.log("Playback started for:", beat.title);
+        setCurrentBeatId(beat.id);
+      })
+      .catch((err) => console.error("Playback error:", err));
+
+    // Reset when audio ends
+    audio.addEventListener("ended", () => {
+      setCurrentBeatId(null);
+      audioRef.current = null;
+    });
   };
 
   if (loading)
@@ -71,7 +104,7 @@ export default function BeatsPage() {
                 className="play-button"
                 onClick={() => handlePlayPreview(beat)}
               >
-                ▶
+                {currentBeatId === beat.id ? <FaPause/> : <FaPlay/>}
               </button>
             </div>
 
