@@ -1,4 +1,37 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient"; // make sure your client is set up
+
+interface Beat {
+  id: number;
+  title: string;
+  genre: string;
+  image_url: string;
+}
+
 export default function Home() {
+  const [featuredBeats, setFeaturedBeats] = useState<Beat[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBeats = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("beats") // make sure your table is called 'beats'
+        .select("*")
+        .eq("featured", true)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching beats:", error);
+      } else {
+        setFeaturedBeats(data || []);
+      }
+      setLoading(false);
+    };
+
+    fetchBeats();
+  }, []);
+
   return (
     <div style={styles.container}>
       {/* Hero Section */}
@@ -13,17 +46,31 @@ export default function Home() {
       {/* Featured Beats */}
       <section style={styles.beatsSection}>
         <h2 style={styles.sectionTitle}>🔥 Featured Beats 🔥</h2>
-        <div style={styles.beatsGrid}>
-          {new Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <div key={i} style={styles.beatCard}>
-                <div style={styles.beatImage}></div>
-                <h3 style={styles.beatTitle}>Beat #{i + 1}</h3>
-                <p style={styles.beatGenre}>Genre: Trap</p>
+
+        {loading ? (
+          <p style={{ color: "#aaa" }}>Cargando...</p>
+        ) : featuredBeats.length === 0 ? (
+          <p style={{ color: "#aaa", fontStyle: "italic" }}>
+            Subiré algunos features pronto
+          </p>
+        ) : (
+          <div style={styles.beatsGrid}>
+            {featuredBeats.map((beat) => (
+              <div key={beat.id} style={styles.beatCard}>
+                <div
+                  style={{
+                    ...styles.beatImage,
+                    backgroundImage: `url(${beat.image_url})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                ></div>
+                <h3 style={styles.beatTitle}>{beat.title}</h3>
+                <p style={styles.beatGenre}>Genre: {beat.genre}</p>
               </div>
             ))}
-        </div>
+          </div>
+        )}
       </section>
     </div>
   );
@@ -80,12 +127,9 @@ const styles = {
     backgroundColor: "#1a1a1a",
     padding: "1rem",
     borderRadius: "12px",
-    boxShadow: "0 0 10px rgba(255,255,255,0.1)",
     transition: "transform 0.3s ease",
   },
   beatImage: {
-    background:
-      "linear-gradient(135deg, #e63946, #6a0572, #1a1a1a)",
     height: "180px",
     borderRadius: "8px",
     marginBottom: "1rem",
